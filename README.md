@@ -1,7 +1,7 @@
 # Prueba Técnica Jikkosoft
 
 Este repositorio contiene la solución a la prueba técnica de Jikkosoft, que abarca tres secciones principales:
-estructuras de datos y Ambos scripts de demostración (`analyze_customers.py` y `demo_transport_routes.py`) están completamente documentados y sirven como referencia para la implementación de casos de uso personalizados.
+estructuras de datos y algritmos, diseño de sistemas y desarrollo de API endpoint.
 
 
 ## Enlaces Importantes
@@ -47,15 +47,20 @@ pip install -e .
 
 ```
 ├── src/
-│   ├── api/                    # API RESTful (Sección 3)
-│   │   ├── main.py            # Endpoints de la API
-│   │   ├── models.py          # Modelos de datos
-│   │   └── service.py         # Lógica de negocio
-│   ├── customer_analytics.py   # Análisis de clientes (Sección 1)
-│   └── transport_routes.py     # Sistema de rutas (Sección 1)
-├── tests/                      # Tests unitarios
-├── media/                      # Diagramas y recursos visuales
-└── requirements.txt           # Dependencias del proyecto
+│   ├── api/                     # API RESTful (Sección 3)
+│   │   ├── main.py              # Endpoints de la API
+│   │   ├── models.py            # Modelos de datos
+│   │   └── service.py           # Lógica de negocio
+│   ├── customer_analytics.py    # Análisis de clientes (Sección 1)
+│   ├── analyze_customers.py     # Demostración de análisis de clientes
+│   ├── transport_routes.py      # Sistema de rutas (Sección 1)
+│   └── demo_transport_routes.py # Demostración sistema de rutas
+├── tests/                       # Tests unitarios
+├── media/                       # Diagramas y recursos visuales
+├── requirements.txt             # Dependencias del proyecto
+├── SOLUCION_SECCION_1.md        # Detalle de solución
+├── SOLUCION_SECCION_2.md        # Detalle de solución
+└── SOLUCION_SECCION_3.md        # Detalle de solución
 ```
 
 ## Ejecución de Tests
@@ -83,7 +88,7 @@ pytest tests/test_customer_analytics.py -v
 
 ### Sección 1: Análisis de Clientes y Sistema de Rutas
 
-El proyecto incluye scripts de demostración listos para ejecutar que muestran el funcionamiento de ambos sistemas.
+El proyecto incluye scripts de demostración listos para ejecutar que muestran el funcionamiento de ambos sistemas. Ambos scripts de demostración (`analyze_customers.py` y `demo_transport_routes.py`) están completamente documentados y sirven como referencia para la implementación de casos de uso personalizados. [Ver la documentación completa de la solución](SOLUCION_SECCION_1.md)
 
 #### Análisis de Clientes
 
@@ -219,32 +224,8 @@ curl -X POST http://localhost:8000/api/v1/orders \
 3. Documentación de la API disponible en:
 - OpenAPI (Swagger): http://localhost:8000/docs
 - ReDoc: http://localhost:8000/redoc
+- [Documentación de la solución](SOLUCION_SECCION_3.md)
 
-## Diagramas y Documentación
 
-- [Diagrama del Sistema](media/system_design_jikkosoft.png)
-- [Flujo de Creación de Órdenes](media/create_order_flow.png)
-- [Esquema de Base de Datos](media/base_database_schema.png)
 
-## Tecnologías Utilizadas
 
-- FastAPI: Framework web para la API RESTful
-- Pydantic: Validación de datos y serialización
-- pytest: Framework de testing
-- coverage: Medición de cobertura de código
-
-## Detalles de Implementación
-
-- Uso de Decimal para cálculos monetarios, evitando problemas de precisión con números flotantes
-- Validación de datos a nivel de modelo mediante Pydantic
-- Cobertura de tests para casos positivos y negativos
-- Sistema de descuentos basado en el monto total de la orden
-- Cálculo de costo de envío según estrato socioeconómico
-
-## Mejoras Propuestas
-
-- Implementación de autenticación y autorización
-- Incorporación de caché para optimización de consultas
-- Implementación de rate limiting
-- Incorporación de logging detallado
-- Integración con sistema de base de datos persistente

@@ -1,0 +1,220 @@
+openapi: 3.0.3
+info:
+  title: Delivery API
+  version: 1.0.0
+  description: >
+    API principal de la plataforma de delivery.
+    Incluye endpoints para gestión de pedidos, pagos y drivers.
+
+servers:
+  - url: https://api.example.com/v1
+    description: Producción
+  - url: https://staging.api.example.com/v1
+    description: Staging
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    OrderResponse:
+      type: object
+      properties:
+        order_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [created, preparing, assigned, delivered, cancelled]
+        total:
+          type: string
+          example: "60000.00"
+        estimated_time_minutes:
+          type: integer
+          example: 25
+    PaymentResponse:
+      type: object
+      properties:
+        payment_id:
+          type: string
+          format: uuid
+        order_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [initiated, pending, confirmed, failed, refunded]
+        amount:
+          type: string
+          example: "60000.00"
+        method:
+          type: string
+          example: "card"
+    DriverNearbyResponse:
+      type: object
+      properties:
+        driver_id:
+          type: string
+          format: uuid
+        distance_meters:
+          type: integer
+          example: 850
+        status:
+          type: string
+          enum: [available, busy, offline]
+
+security:
+  - BearerAuth: []
+
+paths:
+  /orders:
+    post:
+      summary: Crear un nuevo pedido
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [customer_id, restaurant_id, items, payment_method]
+              properties:
+                customer_id:
+                  type: string
+                  format: uuid
+                restaurant_id:
+                  type: string
+                  format: uuid
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required: [menu_item_id, quantity]
+                    properties:
+                      menu_item_id:
+                        type: string
+                        format: uuid
+                      quantity:
+                        type: integer
+                        example: 2
+                payment_method:
+                  type: string
+                  example: "card"
+      responses:
+        "201":
+          description: Pedido creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+
+  /orders/{order_id}:
+    get:
+      summary: Obtener estado de un pedido
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Estado del pedido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        "404":
+          description: Pedido no encontrado
+
+  /payments:
+    post:
+      summary: Iniciar un pago para un pedido
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [order_id, amount, method]
+              properties:
+                order_id:
+                  type: string
+                  format: uuid
+                amount:
+                  type: string
+                  example: "60000.00"
+                method:
+                  type: string
+                  example: "card"
+      responses:
+        "201":
+          description: Pago iniciado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+
+  /payments/{payment_id}:
+    get:
+      summary: Consultar estado de un pago
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Detalle del pago
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        "404":
+          description: Pago no encontrado
+
+  /drivers/nearby:
+    get:
+      summary: Obtener drivers cercanos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: lat
+          in: query
+          required: true
+          schema:
+            type: number
+            format: float
+        - name: lon
+          in: query
+          required: true
+          schema:
+            type: number
+            format: float
+        - name: radius_m
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1000
+      responses:
+        "200":
+          description: Lista de drivers disponibles cerca
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DriverNearbyResponse'

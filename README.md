@@ -223,7 +223,6 @@ curl -X POST http://localhost:8000/api/v1/orders \
 
 3. Documentación de la API disponible en:
 - OpenAPI (Swagger): http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
 - [Documentación de la solución](SOLUCION_SECCION_3.md)
 
 

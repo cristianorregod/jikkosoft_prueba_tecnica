@@ -28,7 +28,7 @@ Sistema orientado a microservicios, event-driven para escalabilidad y resilienci
 - Funciones: Centraliza el control de seguridad y políticas necesarias rediciendo la carga en los servicios, encargandose de la Autenticación ((JWT passthrough)), Rate limiting, TLS termination, Routing, Request/Response Logging, CORS.
 
 **Auth Service**
-- Funciones: Administra la autenticación al sistema, refresh tokens, roles (cliente, restaurante, driver, admin). Este bien uede ser un servicio de terceros o propiamente desarrollado a la medida que se requiera.
+- Funciones: Administra la autenticación al sistema, refresh tokens, roles (cliente, restaurante, driver, admin). Este bien puede ser un servicio de terceros o propiamente desarrollado a la medida que se requiera.
 
 **Order Service**
 - Funciones: Se encargar de la creación de los pedidos, actualización de estados, historial.

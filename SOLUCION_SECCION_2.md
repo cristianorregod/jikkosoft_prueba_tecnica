@@ -85,6 +85,11 @@ A continuación listo algunos de los eventos que pueden emplearse en el sistema:
 - `driver.location.updated`
 - `driver.status.changed`
 
-**5. Diseño de la API**
+**5. Flujo de Creación de Orden**
+
+A muy alto nivel suministro un ejemplo de lo que sería el fluj basico para la creación de una orden pasando por el pago y asignación de domiciliario (Driver).
+<img src="https://res.cloudinary.com/dvjzp6scj/image/upload/v1759119123/projects/create_order_flow_tyjcbl.png"/>
+
+**6. Diseño de la API**
 
 Para el ejercicio detallaré algunos de los endpoints principales para el sistema. Se realiza la estructura de la API en formato OpenAPI en archivo <a href="/api_design.yaml" target="_blank">api_design.yaml</a> y puede visualizarse en el siguiente enlace 👉 <a href="https://app.swaggerhub.com/apis-docs/colraices/Jikkosoft_Delivery_API/1.0.0" target="_blank">Jikkosoft_Delivery_API</a>
